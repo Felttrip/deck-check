@@ -50,9 +50,12 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	err = checkDeckInPool(d, p)
-	if err != nil {
-		fmt.Println(err)
+	errs := checkDeckInPool(d, p)
+	if len(errs) > 0 {
+		for _, err := range errs {
+			fmt.Println(err)
+
+		}
 		return
 	}
 
@@ -69,20 +72,21 @@ func checkDeckAndSideboardSize(d deck) error {
 	return nil
 }
 
-func checkDeckInPool(d deck, p pool) error {
+func checkDeckInPool(d deck, p pool) []error {
+	err := []error{}
 	for _, c := range d.mainDeck {
 		inPool := useCardFromPool(c, p)
 		if !inPool {
-			return fmt.Errorf("Main Deck Card %s not in pool or there are too many copies used", c.name)
+			err = append(err, fmt.Errorf("Main Deck Card %s not in pool or there are too many copies used", c.name))
 		}
 	}
 	for _, c := range d.sideboard {
 		inPool := useCardFromPool(c, p)
 		if !inPool {
-			return fmt.Errorf("Sideboard Card %s not in pool or there are too many copies used", c.name)
+			err = append(err, fmt.Errorf("Sideboard Card %s not in pool or there are too many copies used", c.name))
 		}
 	}
-	return nil
+	return err
 }
 
 //returns true if the card was available to be used in the pool, false if the card is unavailable
@@ -119,7 +123,8 @@ func loadDeck(p string) deck {
 
 	file, err := os.Open(p)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("No Deck Submitted")
+		os.Exit(0)
 	}
 	defer file.Close()
 
