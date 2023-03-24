@@ -1,4 +1,4 @@
-module deck-check
+module github.com/felttrip/deck-check
 
 go 1.18
 
