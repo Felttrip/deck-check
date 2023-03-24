@@ -1,4 +1,4 @@
-module deckcheck
+module deck-check
 
 go 1.18
 
