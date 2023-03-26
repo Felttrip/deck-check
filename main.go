@@ -64,10 +64,10 @@ func main() {
 
 func checkDeckAndSideboardSize(d deck) error {
 	if numCards(d.mainDeck) < MAIN_DECK_MIN {
-		return fmt.Errorf("Main Deck is under limit of %d", MAIN_DECK_MIN)
+		return fmt.Errorf("main Deck is under limit of %d", MAIN_DECK_MIN)
 	}
 	if numCards(d.sideboard) > SIDEBOARD_MAX {
-		return fmt.Errorf("Sideboard exceeds limit of %d", SIDEBOARD_MAX)
+		return fmt.Errorf("sideboard exceeds limit of %d", SIDEBOARD_MAX)
 	}
 	return nil
 }
@@ -77,19 +77,19 @@ func checkDeckInPool(d deck, p pool) []error {
 	for _, c := range d.mainDeck {
 		inPool := useCardFromPool(c, p)
 		if !inPool {
-			err = append(err, fmt.Errorf("Main Deck Card %s not in pool or there are too many copies used", c.name))
+			err = append(err, fmt.Errorf("main Deck Card %s not in pool or there are too many copies used", c.name))
 		}
 	}
 	for _, c := range d.sideboard {
 		inPool := useCardFromPool(c, p)
 		if !inPool {
-			err = append(err, fmt.Errorf("Sideboard Card %s not in pool or there are too many copies used", c.name))
+			err = append(err, fmt.Errorf("sideboard Card %s not in pool or there are too many copies used", c.name))
 		}
 	}
 	return err
 }
 
-//returns true if the card was available to be used in the pool, false if the card is unavailable
+// returns true if the card was available to be used in the pool, false if the card is unavailable
 func useCardFromPool(c card, p pool) bool {
 	//if its a land skip it all pools have land
 	if slices.Contains(LANDS, c.name) {
@@ -188,6 +188,8 @@ func parseCard(s string) (card, error) {
 	if !found {
 		return card{}, fmt.Errorf("issue parsing card %v", s)
 	}
+	//strip off expansion like (ONE) 261
+	name, _, _ = strings.Cut(name, " (")
 	q, err := strconv.Atoi(quantity)
 	if err != nil {
 		return card{}, fmt.Errorf("issue converting quantity %v", s)
