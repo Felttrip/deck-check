@@ -1,10 +1,12 @@
 ## Example script for checking multiple decks
-declare -a arr=("yakujakku" "jediguest")
+declare -a players=("yakujakku" "guest")
+declare -a decks=("TdE0GcrTrt" "UOJVSEusmG")
+declare -a pools=("Uo2i0CGxHh" "yJuMuZVGUD")
 
 ## now loop through the above array
-for i in "${arr[@]}"
+for i in "${!players[@]}"
 do
-    echo "$i"
-go run main.go --deck-file ../mtg-sealed-league/one/pools/${i}/deck.txt --pool-file ../mtg-sealed-league/one/pools/${i}/final.txt
+    echo "${players[$i]}"
+go run main.go --deck ${decks[$i]} --pool ${pools[$i]}
     echo ""
 done

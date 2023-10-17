@@ -155,7 +155,22 @@ func loadPoolFromSealedDeck(id string) pool {
 	p = append(p, deckResp.Deck...)
 	p = append(p, deckResp.Sideboard...)
 	p = append(p, deckResp.Hidden...)
+	p = dedupePool(p)
 	return p
+}
+func dedupePool(p pool) pool {
+	cards := make(map[string]int)
+	dedupedPool := []Card{}
+	for _, item := range p {
+		cards[item.Name] += item.Count
+	}
+	for k, v := range cards {
+		dedupedPool = append(dedupedPool, Card{
+			Name:  k,
+			Count: v,
+		})
+	}
+	return dedupedPool
 }
 
 func getCardsFromSealedDeck(id string) sealedDeckResp {
