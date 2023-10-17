@@ -10,40 +10,40 @@ func TestParseCard(t *testing.T) {
 	cases := []struct {
 		name string
 		in   string
-		out  card
+		out  Card
 		err  error
 	}{
 		{
 			name: "Parses a card with quantity 1 without error",
 			in:   "1 Swooping Lookout",
-			out: card{
-				name:     "Swooping Lookout",
-				quantity: 1,
+			out: Card{
+				Name:  "Swooping Lookout",
+				Count: 1,
 			},
 			err: nil,
 		},
 		{
 			name: "Parses a card with quantity > 1 without error",
 			in:   "5 Swooping Lookout",
-			out: card{
-				name:     "Swooping Lookout",
-				quantity: 5,
+			out: Card{
+				Name:  "Swooping Lookout",
+				Count: 5,
 			},
 			err: nil,
 		},
 		{
 			name: "Parses a card with expansion information without error",
 			in:   "1 Terramorphic Expanse (ONE) 261			",
-			out: card{
-				name:     "Terramorphic Expanse",
-				quantity: 1,
+			out: Card{
+				Name:  "Terramorphic Expanse",
+				Count: 1,
 			},
 			err: nil,
 		},
 		{
 			name: "errors on invalid card format",
 			in:   "somethingWithoutASpace",
-			out:  card{},
+			out:  Card{},
 			err:  nil,
 		},
 	}

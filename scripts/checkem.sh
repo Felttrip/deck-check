@@ -5,6 +5,6 @@ declare -a arr=("yakujakku" "jediguest")
 for i in "${arr[@]}"
 do
     echo "$i"
-go run main.go --deck ../mtg-sealed-league/one/pools/${i}/deck.txt --pool ../mtg-sealed-league/one/pools/${i}/final.txt
+go run main.go --deck-file ../mtg-sealed-league/one/pools/${i}/deck.txt --pool-file ../mtg-sealed-league/one/pools/${i}/final.txt
     echo ""
 done

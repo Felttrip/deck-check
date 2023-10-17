@@ -1,0 +1,1 @@
+Example responses from https://sealeddeck.tech/api/pools/
